@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Communication Assignment - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a472a;
+            --secondary: #2d7a4f;
+            --accent: #4dd0e1;
+            --light: #f0f9f7;
+            --text: #1a1a1a;
+            --border: #d0e8e3;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: linear-gradient(135deg, var(--light) 0%, #e8f5f3 100%);
+            min-height: 100vh;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(26, 71, 42, 0.2);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="1200" height="600" fill="url(%23grid)"/></svg>');
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        /* Profile Section */
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .profile-image {
+            text-align: center;
+        }
+
+        .profile-image img {
+            width: 250px;
+            height: 250px;
+            border-radius: 15px;
+            border: 4px solid var(--secondary);
+            box-shadow: 0 10px 30px rgba(26, 71, 42, 0.15);
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-image img:hover {
+            transform: scale(1.05);
+        }
+
+        .profile-info h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-id {
+            font-size: 1.1rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .profile-bio {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            background: white;
+            border-radius: 12px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid var(--secondary);
+        }
+
+        section h2 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        section h3 {
+            color: var(--secondary);
+            font-size: 1.3rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        section p {
+            margin-bottom: 1rem;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        /* Links Section */
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .link-card {
+            background: linear-gradient(135deg, var(--light) 0%, white 100%);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 2px solid var(--border);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(26, 71, 42, 0.15);
+            border-color: var(--accent);
+        }
+
+        .link-card h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .link-card p {
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            box-shadow: 0 6px 15px rgba(26, 71, 42, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn.external {
+            background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+        }
+
+        .btn.external:hover {
+            background: linear-gradient(135deg, #1565c0 0%, #1976d2 100%);
+        }
+
+        .btn.youtube {
+            background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+        }
+
+        .btn.youtube:hover {
+            background: linear-gradient(135deg, #cc0000 0%, #ff0000 100%);
+        }
+
+        /* Telegraph Diagram */
+        .telegraph-diagram {
+            background: linear-gradient(135deg, #f9f9f9 0%, white 100%);
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            border: 2px solid var(--border);
+            overflow-x: auto;
+        }
+
+        .telegraph-svg {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Video Container */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+            margin: 2rem 0;
+            background: #000;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 10px;
+        }
+
+        /* Inspiration Section */
+        .inspiration-box {
+            background: linear-gradient(135deg, var(--light) 0%, rgba(77, 208, 225, 0.1) 100%);
+            padding: 2rem;
+            border-radius: 10px;
+            border-left: 5px solid var(--accent);
+            margin-top: 2rem;
+        }
+
+        .inspiration-box h3 {
+            color: var(--secondary);
+            margin-top: 0;
+        }
+
+        .inspiration-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .inspiration-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-top: 3px solid var(--accent);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .inspiration-item strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Topics List */
+        .topics-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .topic-card {
+            background: linear-gradient(135deg, var(--light) 0%, white 100%);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+            transition: all 0.3s ease;
+        }
+
+        .topic-card:hover {
+            box-shadow: 0 5px 15px rgba(26, 71, 42, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .topic-card h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .topic-card p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .profile-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            section {
+                padding: 1.5rem;
+            }
+
+            section h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .link-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .topic-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="header-container">
+            <div class="logo">📡 Data Communication</div>
+            <nav>
+                <a href="#overview">Overview</a>
+                <a href="#concepts">Concepts</a>
+                <a href="#history">History</a>
+                <a href="#technologies">Technologies</a>
+                <a href="#resources">Resources</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Data Communication Assignment</h1>
+            <p>A comprehensive exploration of communication systems, protocols, and technologies</p>
+        </div>
+    </div>
+
+    <!-- Profile Section -->
+    <div class="profile-container">
+        <div class="profile-image">
+            <img src="1779362188578.png" alt="Profile Photo">
+        </div>
+        <div class="profile-info">
+            <h2>DA-NZI MBOUMBA Junior Judicael</h2>
+            <div class="profile-id">Student ID: PUIT/24210155</div>
+            <div class="profile-bio">
+                <p>A dedicated student pursuing excellence in Data Communication and Information Technology. With a passion for understanding how systems communicate and connect, I am committed to mastering the complexities of modern networking protocols and communication frameworks.</p>
+                <p><strong>Focus Areas:</strong> Network protocols, data transmission, signal processing, and emerging communication technologies.</p>
+                <p><strong>Career Goals:</strong> To become a networking specialist and contribute to the evolution of global communication systems.</p>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <!-- Section 1: Overview -->
+        <section id="overview">
+            <h2>📊 Section 1: Overview of Data Communication</h2>
+            <p>Data communication is the exchange of data between computers and devices using a transmission medium. It involves the process of sending and receiving information across distances, enabling the global connectivity that defines the modern world.</p>
+            
+            <h3>Key Components:</h3>
+            <div class="topics-list">
+                <div class="topic-card">
+                    <h4>Message</h4>
+                    <p>The information to be transmitted - could be text, audio, video, or any digital content.</p>
+                </div>
+                <div class="topic-card">
+                    <h4>Sender</h4>
+                    <p>The device that originates the message and transmits it to the destination.</p>
+                </div>
+                <div class="topic-card">
+                    <h4>Receiver</h4>
+                    <p>The device that accepts the transmitted message and processes it.</p>
+                </div>
+                <div class="topic-card">
+                    <h4>Transmission Medium</h4>
+                    <p>The physical path through which the signal travels (copper, fiber, wireless).</p>
+                </div>
+                <div class="topic-card">
+                    <h4>Protocol</h4>
+                    <p>Rules that govern the transmission and reception of data.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Concepts & Fundamentals -->
+        <section id="concepts">
+            <h2>🔬 Section 2: Core Concepts & Fundamentals</h2>
+            <p>Understanding the fundamental principles of data communication is essential for grasping more complex topics in networking and telecommunications.</p>
+            
+            <h3>Transmission Modes:</h3>
+            <ul style="margin-left: 2rem; margin-top: 1rem;">
+                <li><strong>Simplex:</strong> Unidirectional communication (e.g., television broadcasting)</li>
+                <li><strong>Half-Duplex:</strong> Two-way communication, but not simultaneous (e.g., walkie-talkies)</li>
+                <li><strong>Full-Duplex:</strong> Simultaneous two-way communication (e.g., telephone calls)</li>
+            </ul>
+
+            <h3>Signal Types:</h3>
+            <ul style="margin-left: 2rem; margin-top: 1rem;">
+                <li><strong>Analog Signals:</strong> Continuous wave signals representing data</li>
+                <li><strong>Digital Signals:</strong> Discrete binary signals (0s and 1s)</li>
+                <li><strong>Modulation:</strong> Process of converting data into signals suitable for transmission</li>
+            </ul>
+
+            <h3>Bandwidth & Throughput:</h3>
+            <p>Bandwidth refers to the range of frequencies available for transmission, while throughput is the actual amount of data successfully transmitted. Understanding these concepts is crucial for optimizing network performance.</p>
+        </section>
+
+        <!-- Section 3: Historical Evolution (Telegraph Included) -->
+        <section id="history">
+            <h2>⚡ Section 3: Historical Evolution of Communication</h2>
+            <p>The evolution of data communication spans centuries, from electrical telegraphs to modern internet protocols. Each innovation built upon previous discoveries, creating the interconnected world we inhabit today.</p>
+
+            <h3>The Telegraph: Foundation of Electric Communication</h3>
+            <p>The telegraph, invented by Samuel Morse in the 1830s, revolutionized long-distance communication by transmitting electrical signals through wires. This technology laid the groundwork for all modern digital communication systems.</p>
+
+            <div class="telegraph-diagram">
+                <svg class="telegraph-svg" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Title -->
+                    <text x="400" y="25" font-size="24" font-weight="bold" text-anchor="middle" fill="#1a472a">
+                        Telegraph System Diagram
+                    </text>
+
+                    <!-- Sender Side -->
+                    <g>
+                        <!-- Telegraph Key (Button) -->
+                        <circle cx="100" cy="100" r="30" fill="#2d7a4f" stroke="#1a472a" stroke-width="2"/>
+                        <text x="100" y="110" font-size="14" font-weight="bold" text-anchor="middle" fill="white">KEY</text>
+                        <text x="100" y="160" font-size="12" text-anchor="middle" fill="#1a472a" font-weight="bold">Sender</text>
+
+                        <!-- Wire from key -->
+                        <line x1="130" y1="100" x2="250" y2="100" stroke="#333" stroke-width="3"/>
+                    </g>
+
+                    <!-- Power Source -->
+                    <g>
+                        <rect x="270" y="70" width="60" height="60" fill="#ff6b6b" stroke="#1a472a" stroke-width="2"/>
+                        <text x="300" y="105" font-size="14" font-weight="bold" text-anchor="middle" fill="white">BATTERY</text>
+                        <text x="300" y="155" font-size="12" text-anchor="middle" fill="#1a472a" font-weight="bold">Power</text>
+                    </g>
+
+                    <!-- Transmission Line -->
+                    <line x1="330" y1="100" x2="470" y2="100" stroke="#333" stroke-width="3" stroke-dasharray="5,5"/>
+                    <text x="400" y="85" font-size="12" text-anchor="middle" fill="#555" font-style="italic">Telegraph Wire</text>
+
+                    <!-- Receiver Side -->
+                    <g>
+                        <!-- Electromagnet -->
+                        <rect x="490" y="70" width="60" height="60" fill="#4dd0e1" stroke="#1a472a" stroke-width="2"/>
+                        <text x="520" y="105" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a472a">EM</text>
+                        <text x="520" y="155" font-size="12" text-anchor="middle" fill="#1a472a" font-weight="bold">Electromagnet</text>
+
+                        <!-- Sounder/Speaker -->
+                        <circle cx="600" cy="100" r="25" fill="#2d7a4f" stroke="#1a472a" stroke-width="2"/>
+                        <path d="M 590 100 Q 600 90 610 100 Q 600 110 590 100" fill="#4dd0e1"/>
+                        <text x="600" y="165" font-size="12" text-anchor="middle" fill="#1a472a" font-weight="bold">Receiver</text>
+
+                        <!-- Morse Code Output -->
+                        <text x="700" y="105" font-size="16" font-weight="bold" fill="#1a472a">·−·−</text>
+                        <text x="700" y="135" font-size="11" text-anchor="middle" fill="#666">(Morse Code)</text>
+                    </g>
+
+                    <!-- Signal representation -->
+                    <g>
+                        <text x="400" y="220" font-size="13" font-weight="bold" text-anchor="middle" fill="#1a472a">Signal Flow:</text>
+                        <path d="M 100 240 L 150 240" stroke="#2d7a4f" stroke-width="2" marker-end="url(#arrowhead)"/>
+                        <text x="125" y="260" font-size="11" text-anchor="middle" fill="#555">Key Pressed</text>
+
+                        <path d="M 250 240 L 300 240" stroke="#ff6b6b" stroke-width="2" marker-end="url(#arrowhead)"/>
+                        <text x="275" y="260" font-size="11" text-anchor="middle" fill="#555">Electrical</text>
+
+                        <path d="M 400 240 L 450 240" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+                        <text x="425" y="260" font-size="11" text-anchor="middle" fill="#555">Transmission</text>
+
+                        <path d="M 550 240 L 600 240" stroke="#4dd0e1" stroke-width="2" marker-end="url(#arrowhead)"/>
+                        <text x="575" y="260" font-size="11" text-anchor="middle" fill="#555">Reception</text>
+                    </g>
+
+                    <!-- Arrow marker definition -->
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                            <polygon points="0 0, 10 3, 0 6" fill="#333"/>
+                        </marker>
+                    </defs>
+                </svg>
+            </div>
+
+            <h3>Timeline of Communication Technology:</h3>
+            <ul style="margin-left: 2rem; margin-top: 1rem;">
+                <li><strong>1830s:</strong> Samuel Morse invents the telegraph</li>
+                <li><strong>1876:</strong> Alexander Graham Bell patents the telephone</li>
+                <li><strong>1895:</strong> Guglielmo Marconi demonstrates wireless telegraphy</li>
+                <li><strong>1920s-1960s:</strong> Development of radio and television broadcasting</li>
+                <li><strong>1960s-1970s:</strong> Emergence of computer networks and packet switching</li>
+                <li><strong>1980s-1990s:</strong> Internet revolution and World Wide Web</li>
+                <li><strong>2000s-Present:</strong> Mobile broadband, 5G, and IoT technologies</li>
+            </ul>
+        </section>
+
+        <!-- Section 4: Modern Technologies & Protocols -->
+        <section id="technologies">
+            <h2>💻 Section 4: Modern Technologies & Network Protocols</h2>
+            <p>Modern data communication relies on sophisticated protocols and technologies that enable seamless global connectivity.</p>
+
+            <h3>Key Network Protocols:</h3>
+            <div class="topics-list">
+                <div class="topic-card">
+                    <h4>TCP/IP</h4>
+                    <p>The foundational protocol suite enabling internet communication, dividing data into packets and ensuring reliable delivery.</p>
+                </div>
+                <div class="topic-card">
+                    <h4>HTTP/HTTPS</h4>
+                    <p>Application-layer protocols for transferring web content securely across the internet.</p>
+                </div>
+                <div class="topic-card">
+                    <h4>Ethernet</h4>
+                    <p>Standard technology for local area networks (LANs), enabling devices to communicate over short distances.</p>
+                </div>
+                <div class="topic-card">
+                    <h4>WiFi (802.11)</h4>
+                    <p>Wireless networking technology enabling mobile internet access without physical cables.</p>
+                </div>
+                <div class="topic-card">
+                    <h4>5G</h4>
+                    <p>Latest cellular technology providing ultra-fast speeds and low latency for mobile communications.</p>
+                </div>
+                <div class="topic-card">
+                    <h4>DNS</h4>
+                    <p>Domain Name System translating human-readable domain names into IP addresses for routing.</p>
+                </div>
+            </div>
+
+            <h3>Embedded Video: Understanding Data Communication</h3>
+            <p>Watch this comprehensive video to understand the fundamentals of data communication systems:</p>
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/mYWsllbszYQ" allowfullscreen="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+            </div>
+        </section>
+
+        <!-- Section 5: Applications & Practical Implementations -->
+        <section id="applications">
+            <h2>🌐 Section 5: Real-World Applications</h2>
+            <p>Data communication technologies power countless applications that impact our daily lives:</p>
+
+            <h3>Key Applications:</h3>
+            <ul style="margin-left: 2rem; margin-top: 1rem;">
+                <li><strong>Cloud Computing:</strong> Enabling data storage and processing across distributed networks</li>
+                <li><strong>Video Conferencing:</strong> Real-time communication with voice and video transmission</li>
+                <li><strong>Social Media:</strong> Massive-scale data distribution and user interaction</li>
+                <li><strong>IoT (Internet of Things):</strong> Connecting billions of smart devices worldwide</li>
+                <li><strong>Online Banking:</strong> Secure financial transactions across networks</li>
+                <li><strong>Streaming Services:</strong> Continuous delivery of multimedia content</li>
+                <li><strong>Telemedicine:</strong> Remote healthcare delivery through digital communication</li>
+                <li><strong>Smart Cities:</strong> Interconnected urban infrastructure and systems</li>
+            </ul>
+
+            <h3>Future Trends:</h3>
+            <p>The future of data communication will be shaped by emerging technologies including quantum communication, advanced AI-driven network optimization, blockchain-based security protocols, and space-based internet connectivity. These innovations will further expand the possibilities of global communication and data exchange.</p>
+        </section>
+
+        <!-- Resources & Links Section -->
+        <section id="resources">
+            <h2>📚 Section 6: Resources & Important Links</h2>
+            <p>Access your assignment materials, external resources, and educational content through the following links:</p>
+
+            <div class="links-grid">
+                <div class="link-card" style="grid-column: 1 / 2; background: linear-gradient(135deg, #1a472a 0%, #2d7a4f 100%); color: white; border: 2px solid #4dd0e1;">
+                    <h4 style="color: #4dd0e1;">🛰️ Satellite 8000 Words Project</h4>
+                    <p>Comprehensive research project on satellite communication systems, technologies, and applications. An in-depth exploration of modern satellite networks and their role in global connectivity.</p>
+                    <a href="#satellite-project" class="btn" style="background: #4dd0e1; color: #1a472a; font-weight: 600;">View Project</a>
+                </div>
+
+                <div class="link-card">
+                    <h4>📋 Assignment Document</h4>
+                    <p>Access and review your complete Data Communication assignment with all requirements and guidelines.</p>
+                    <a href="https://www.example.com/assignment" target="_blank" class="btn external">View Assignment</a>
+                </div>
+
+                <div class="link-card">
+                    <h4>📝 Turnitin Submission</h4>
+                    <p>Submit your work through Turnitin for plagiarism checking and instructor feedback.</p>
+                    <a href="https://www.turnitin.com" target="_blank" class="btn external">Go to Turnitin</a>
+                </div>
+
+                <div class="link-card">
+                    <h4>▶️ Educational Video</h4>
+                    <p>Watch our embedded video explaining data communication fundamentals and protocols in detail.</p>
+                    <a href="#technologies" class="btn youtube">Watch Video</a>
+                </div>
+
+                <div class="link-card">
+                    <h4>💻 GitHub Repository</h4>
+                    <p>View the source code and project files on GitHub for transparency and collaboration.</p>
+                    <a href="https://github.com" target="_blank" class="btn external">Visit GitHub</a>
+                </div>
+
+                <div class="link-card">
+                    <h4>🎓 One Million Coders</h4>
+                    <p>Sign up for web development courses and expand your programming skills.</p>
+                    <a href="https://www.onemillioncodes.com" target="_blank" class="btn external">Sign Up</a>
+                </div>
+
+                <div class="link-card">
+                    <h4>📖 Additional Resources</h4>
+                    <p>Access recommended textbooks, research papers, and educational materials on data communication.</p>
+                    <a href="https://www.coursera.org" target="_blank" class="btn external">View Resources</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Inspiration Section -->
+        <section id="inspiration">
+            <h2>✨ What Inspires Me</h2>
+            <p>Throughout my journey in data communication studies, several elements continue to inspire my passion for this field:</p>
+
+            <div class="inspiration-box">
+                <h3>Key Sources of Inspiration</h3>
+                <div class="inspiration-items">
+                    <div class="inspiration-item">
+                        <strong>🚀 Technological Innovation</strong>
+                        <p>The rapid pace of technological advancement and how new technologies solve real-world problems fascinates me constantly.</p>
+                    </div>
+                    <div class="inspiration-item">
+                        <strong>🌍 Global Connectivity</strong>
+                        <p>The ability of communication technology to connect people across continents and bridge cultural divides is truly remarkable.</p>
+                    </div>
+                    <div class="inspiration-item">
+                        <strong>🔬 Scientific Discovery</strong>
+                        <p>Understanding the physics and mathematics behind signal transmission and network protocols provides intellectual fulfillment.</p>
+                    </div>
+                    <div class="inspiration-item">
+                        <strong>💡 Problem Solving</strong>
+                        <p>Tackling complex networking challenges and optimizing data transmission methods drives my continuous learning.</p>
+                    </div>
+                    <div class="inspiration-item">
+                        <strong>🤝 Collaboration</strong>
+                        <p>Working with peers and mentors to understand concepts and develop innovative solutions strengthens my knowledge.</p>
+                    </div>
+                    <div class="inspiration-item">
+                        <strong>🎯 Career Growth</strong>
+                        <p>The prospect of contributing to the evolution of communication technology and making a meaningful impact on society motivates me daily.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Personal Reflection</h3>
+            <p>Every time I learn about a new protocol or understand how data travels across the globe instantaneously, I'm reminded of why I chose this field. The intersection of physics, mathematics, and computer science in data communication is endlessly fascinating. I aspire to be part of the next generation of innovators who push the boundaries of what's possible in global connectivity and digital transformation.</p>
+        </section>
+
+        <!-- Satellite 8000 Words Project Section -->
+        <section id="satellite-project">
+            <h2>🛰️ Satellite Communication Systems - 8000 Words Project</h2>
+            <p>This comprehensive research project explores the critical role of satellite communication systems in modern data transmission and global connectivity infrastructure.</p>
+            <p>here is the link to my class project: <a href="https://docs.google.com/document/d/1bgjObBKj5rj5Y0uB405qQGtq1ZCEQT-8/edit?usp=drive_link&ouid=107740602950998532020&rtpof=true&sd=true" target="_blank">Project-8000</a></p> 
+
+            <h3>Project Overview:</h3>
+            <p>This 8000-word research paper delves into satellite communication technologies, their applications, challenges, and future prospects. The project covers historical development, current implementations, and emerging trends in space-based communications.</p>
+
+            <h3>Key Topics Covered:</h3>
+            <div class="topics-list">
+                <div class="topic-card">
+                    <h4>Satellite Fundamentals</h4>
+                    <p>Understanding orbital mechanics, satellite types (LEO, MEO, GEO), and their distinct operational characteristics and advantages.</p>
+                </div>
+                <div class="topic-card">
+                    <h4>Communication Protocols</h4>
+                    <p>Exploring the protocols and standards specific to satellite communications, including frequency bands and modulation techniques.</p>
+                </div>
+                <div class="topic-card">
+                    <h4>Global Coverage Systems</h4>
+                    <p>Analyzing mega-constellations like Starlink, OneWeb, and Kuiper, and their impact on worldwide internet connectivity.</p>
+                </div>
+                <div class="topic-card">
+                    <h4>Applications & Services</h4>
+                    <p>Examining real-world applications: remote sensing, weather forecasting, disaster management, and broadband internet delivery.</p>
+                </div>
+                <div class="topic-card">
+                    <h4>Technical Challenges</h4>
+                    <p>Discussing latency issues, space debris, signal interference, and solutions for reliable satellite communication.</p>
+                </div>
+                <div class="topic-card">
+                    <h4>Future Innovations</h4>
+                    <p>Exploring emerging technologies: quantum satellite communications, optical inter-satellite links, and AI-driven network optimization.</p>
+                </div>
+            </div>
+
+            <h3>Research Insights:</h3>
+            <ul style="margin-left: 2rem; margin-top: 1rem;">
+                <li><strong>Historical Context:</strong> Evolution from early communication satellites (Telstar, Intelsat) to modern mega-constellations</li>
+                <li><strong>Technical Architecture:</strong> Signal transmission, ground stations, and network infrastructure</li>
+                <li><strong>Economic Impact:</strong> Market growth, investment trends, and commercial applications</li>
+                <li><strong>Environmental Considerations:</strong> Space debris mitigation and sustainability in satellite operations</li>
+                <li><strong>Regulatory Framework:</strong> International protocols and spectrum management</li>
+                <li><strong>Case Studies:</strong> Analysis of successful satellite communication implementations worldwide</li>
+            </ul>
+
+            <h3>Project Significance:</h3>
+            <p>This project demonstrates comprehensive understanding of how satellite systems complement terrestrial networks, bridging connectivity gaps in remote regions and supporting critical infrastructure. It highlights the importance of satellite communications in achieving global digital inclusion and supporting emerging technologies like IoT and autonomous systems.</p>
+
+            <div style="background: #f0f9f7; padding: 2rem; border-radius: 8px; margin-top: 2rem; border-left: 4px solid #4dd0e1;">
+                <h4 style="color: #1a472a;">📊 Project Statistics:</h4>
+                <p><strong>Word Count:</strong> 8,000 words | <strong>Research Depth:</strong> Comprehensive | <strong>Focus Areas:</strong> 6 Major Sections | <strong>Technical Complexity:</strong> Advanced</p>
+                <p style="margin-top: 1rem; color: #555;"><em>This project represents an in-depth academic investigation into one of the most critical components of modern global communication infrastructure.</em></p>
+            </div>
+        </section>
+
+        
+    <footer>
+        <p>&copy; 2024 Data Communication Assignment Portfolio</p>
+        <p>Student ID: DC-2024-001 | Course: Data Communication Fundamentals</p>
+        <p>Created with dedication to learning and academic excellence</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll animation effect
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
